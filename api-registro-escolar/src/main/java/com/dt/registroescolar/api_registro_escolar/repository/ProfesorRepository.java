@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface ProfesorRepository extends JpaRepository<Profesor, Long> {
 
-    Optional<Profesor> findByEspecialidad(String especialidad);
+    List<Profesor> findByEspecialidad(String especialidad);
 
     Optional<Profesor> findByIdPersona(Long idPersona);
 

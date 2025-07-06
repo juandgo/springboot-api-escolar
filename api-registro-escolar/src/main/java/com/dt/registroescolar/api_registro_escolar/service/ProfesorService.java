@@ -1,20 +1,21 @@
 package com.dt.registroescolar.api_registro_escolar.service;
 
-import com.dt.registroescolar.api_registro_escolar.entity.Profesor;
+import com.dt.registroescolar.api_registro_escolar.dto.ProfesorDTO;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ProfesorService {
 
-    Profesor registrarProfesor(Profesor profesor);
+    ProfesorDTO registrarProfesor(ProfesorDTO profesorDTO);
 
-    List<Profesor> listarProfesores();
+    List<ProfesorDTO> listarProfesores();
 
-    Optional<Profesor> buscarPorId(Long id);
-    Optional<Profesor> buscarPorEspecialidad(String especialidad);
+    Optional<ProfesorDTO> buscarPorId(Long id);
 
-    Profesor actualizarProfesor(Long id, Profesor profesorActualizado);
+    List<ProfesorDTO> buscarPorEspecialidad(String especialidad);
+
+    ProfesorDTO actualizarProfesor(Long id, ProfesorDTO profesorActualizadoDTO);
 
     void eliminarProfesor(Long id);
 }

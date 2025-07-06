@@ -1,6 +1,8 @@
 package com.dt.registroescolar.api_registro_escolar.service.impl;
 
+import com.dt.registroescolar.api_registro_escolar.dto.PersonaDTO;
 import com.dt.registroescolar.api_registro_escolar.entity.Persona;
+import com.dt.registroescolar.api_registro_escolar.mapper.PersonaMapper;
 import com.dt.registroescolar.api_registro_escolar.repository.PersonaRepository;
 import com.dt.registroescolar.api_registro_escolar.service.PersonaService;
 import lombok.SneakyThrows;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PersonaServiceImpl implements PersonaService {
@@ -16,44 +19,51 @@ public class PersonaServiceImpl implements PersonaService {
     @Autowired
     private PersonaRepository personaRepository;
 
+    @Autowired
+    private PersonaMapper personaMapper;
+
     @Override
-    public Persona registrarPersona(Persona persona) {
-        return personaRepository.save(persona);
+    public PersonaDTO registrarPersona(PersonaDTO personaDTO) {
+        Persona persona = personaMapper.toEntity(personaDTO);
+        Persona guardada = personaRepository.save(persona);
+        return personaMapper.toDTO(guardada);
     }
 
     @Override
-    public List<Persona> listarPersonas() {
-        return personaRepository.findAll();
+    public List<PersonaDTO> listarPersonas() {
+        return personaRepository.findAll().stream()
+                .map(personaMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<Persona> buscarPorId(Long idPersona) {
-        return personaRepository.findById(idPersona);
+    public Optional<PersonaDTO> buscarPorId(Long idPersona) {
+        return personaRepository.findById(idPersona)
+                .map(personaMapper::toDTO);
     }
 
     @Override
-    public Optional<Persona> buscarPorEmail(String email) {
-        return personaRepository.findByEmail(email);
+    public Optional<PersonaDTO> buscarPorEmail(String email) {
+        return personaRepository.findByEmail(email)
+                .map(personaMapper::toDTO);
     }
 
     @Override
-    public List<Persona> buscarPorApellido(String apellido) {
-        return personaRepository.findByApellido(apellido);
+    public List<PersonaDTO> buscarPorApellido(String apellido) {
+        return personaRepository.findByApellido(apellido).stream()
+                .map(personaMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
     @SneakyThrows
-    public Persona actualizarPersona(Long idPersona, Persona personaActualizada) {
+    public PersonaDTO actualizarPersona(Long idPersona, PersonaDTO personaActualizadaDTO) {
         Persona personaExistente = personaRepository.findById(idPersona)
                 .orElseThrow(() -> new Exception("Persona con ID " + idPersona + " no encontrada"));
 
-        personaExistente.setNombre(personaActualizada.getNombre());
-        personaExistente.setApellido(personaActualizada.getApellido());
-        personaExistente.setFechaNacimiento(personaActualizada.getFechaNacimiento());
-        personaExistente.setEmail(personaActualizada.getEmail());
-        personaExistente.setTelefono(personaActualizada.getTelefono());
-
-        return personaRepository.save(personaExistente);
+        personaMapper.toEntity(personaActualizadaDTO, personaExistente);
+        Persona actualizada = personaRepository.save(personaExistente);
+        return personaMapper.toDTO(actualizada);
     }
 
     @Override
@@ -61,7 +71,6 @@ public class PersonaServiceImpl implements PersonaService {
     public void eliminarPersona(Long idPersona) {
         Persona personaExistente = personaRepository.findById(idPersona)
                 .orElseThrow(() -> new Exception("Persona con ID " + idPersona + " no encontrada"));
-
-        personaRepository.deleteById(idPersona);
+        personaRepository.delete(personaExistente);
     }
 }

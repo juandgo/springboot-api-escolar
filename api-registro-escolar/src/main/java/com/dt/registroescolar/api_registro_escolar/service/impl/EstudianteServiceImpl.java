@@ -1,6 +1,8 @@
 package com.dt.registroescolar.api_registro_escolar.service.impl;
 
+import com.dt.registroescolar.api_registro_escolar.dto.EstudianteDTO;
 import com.dt.registroescolar.api_registro_escolar.entity.Estudiante;
+import com.dt.registroescolar.api_registro_escolar.mapper.EstudianteMapper;
 import com.dt.registroescolar.api_registro_escolar.repository.EstudianteRepository;
 import com.dt.registroescolar.api_registro_escolar.service.EstudianteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EstudianteServiceImpl implements EstudianteService {
@@ -15,42 +18,45 @@ public class EstudianteServiceImpl implements EstudianteService {
     @Autowired
     private EstudianteRepository estudianteRepository;
 
+    @Autowired
+    private EstudianteMapper estudianteMapper;
+
     @Override
-    public Estudiante registrarEstudiante(Estudiante estudiante) {
-        return estudianteRepository.save(estudiante);
+    public EstudianteDTO registrarEstudiante(EstudianteDTO estudianteDTO) {
+        Estudiante estudiante = estudianteMapper.toEntity(estudianteDTO);
+        Estudiante guardado = estudianteRepository.save(estudiante);
+        return estudianteMapper.toDTO(guardado);
     }
 
     @Override
-    public List<Estudiante> listarEstudiantes() {
-        return estudianteRepository.findAll();
+    public List<EstudianteDTO> listarEstudiantes() {
+        return estudianteRepository.findAll().stream()
+                .map(estudianteMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<Estudiante> buscarPorId(Long id) {
-        return estudianteRepository.findById(id);
+    public Optional<EstudianteDTO> buscarPorId(Long id) {
+        return estudianteRepository.findById(id)
+                .map(estudianteMapper::toDTO);
     }
 
     @Override
-    public Optional<Estudiante> buscarPorNumeroMatricula(String numeroMatricula) {
-        return estudianteRepository.findByNumeroMatricula(numeroMatricula);
+    public Optional<EstudianteDTO> buscarPorNumeroMatricula(String numeroMatricula) {
+        return estudianteRepository.findByNumeroMatricula(numeroMatricula)
+                .map(estudianteMapper::toDTO);
     }
 
     @Override
-    public Estudiante actualizarEstudiante(Long id, Estudiante estudianteActualizado) {
+    public EstudianteDTO actualizarEstudiante(Long id, EstudianteDTO estudianteDTO) {
         Optional<Estudiante> estudianteOptional = estudianteRepository.findById(id);
-
         if (estudianteOptional.isPresent()) {
-            Estudiante estudiante = estudianteOptional.get();
-            estudiante.setNombre(estudianteActualizado.getNombre());
-            estudiante.setApellido(estudianteActualizado.getApellido());
-            estudiante.setFechaNacimiento(estudianteActualizado.getFechaNacimiento());
-            estudiante.setEmail(estudianteActualizado.getEmail());
-            estudiante.setTelefono(estudianteActualizado.getTelefono());
-            estudiante.setNumeroMatricula(estudianteActualizado.getNumeroMatricula());
-            estudiante.setGrado(estudianteActualizado.getGrado());
-            return estudianteRepository.save(estudiante);
+            Estudiante estudianteExistente = estudianteOptional.get();
+            estudianteMapper.toEntity(estudianteDTO, estudianteExistente); // actualiza solo campos del DTO
+            Estudiante actualizado = estudianteRepository.save(estudianteExistente);
+            return estudianteMapper.toDTO(actualizado);
         } else {
-            throw new RuntimeException("Estudiante no encontrado con ID: " + id);
+            throw new RuntimeException("Estudiante no encontrado con id: " + id);
         }
     }
 

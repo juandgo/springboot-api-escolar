@@ -1,23 +1,23 @@
 package com.dt.registroescolar.api_registro_escolar.service;
 
-import com.dt.registroescolar.api_registro_escolar.entity.Persona;
+import com.dt.registroescolar.api_registro_escolar.dto.PersonaDTO;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface PersonaService {
 
-    Persona registrarPersona(Persona persona);
+    PersonaDTO registrarPersona(PersonaDTO personaDTO);
 
-    List<Persona> listarPersonas();
+    List<PersonaDTO> listarPersonas();
 
-    Optional<Persona> buscarPorId(Long idPersona);
+    Optional<PersonaDTO> buscarPorId(Long idPersona);
 
-    Optional<Persona> buscarPorEmail(String email);
+    Optional<PersonaDTO> buscarPorEmail(String email);
 
-    List<Persona> buscarPorApellido(String apellido);
+    List<PersonaDTO> buscarPorApellido(String apellido);
 
-    Persona actualizarPersona(Long idPersona, Persona personaActualizada);
+    PersonaDTO actualizarPersona(Long idPersona, PersonaDTO personaActualizada);
 
     void eliminarPersona(Long idPersona);
 }

@@ -1,21 +1,21 @@
 package com.dt.registroescolar.api_registro_escolar.service;
 
-import com.dt.registroescolar.api_registro_escolar.entity.Estudiante;
+import com.dt.registroescolar.api_registro_escolar.dto.EstudianteDTO;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface EstudianteService {
 
-    Estudiante registrarEstudiante(Estudiante estudiante);
+    EstudianteDTO registrarEstudiante(EstudianteDTO estudianteDTO);
 
-    List<Estudiante> listarEstudiantes();
+    List<EstudianteDTO> listarEstudiantes();
 
-    Optional<Estudiante> buscarPorId(Long id);
+    Optional<EstudianteDTO> buscarPorId(Long id);
 
-    Optional<Estudiante> buscarPorNumeroMatricula(String numeroMatricula);
+    Optional<EstudianteDTO> buscarPorNumeroMatricula(String numeroMatricula);
 
-    Estudiante actualizarEstudiante(Long id, Estudiante estudiante);
+    EstudianteDTO actualizarEstudiante(Long id, EstudianteDTO estudianteDTO);
 
     void eliminarEstudiante(Long id);
 }

@@ -1,15 +1,12 @@
 package com.dt.registroescolar.api_registro_escolar.controller;
 
-import com.dt.registroescolar.api_registro_escolar.entity.Estudiante;
-import com.dt.registroescolar.api_registro_escolar.entity.Profesor;
+import com.dt.registroescolar.api_registro_escolar.dto.ProfesorDTO;
 import com.dt.registroescolar.api_registro_escolar.service.ProfesorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,53 +18,43 @@ public class ProfesorController {
     private ProfesorService profesorService;
 
     @PostMapping("/registrar")
-    public ResponseEntity<Profesor> registrarProfesor(@RequestBody Profesor profesor) {
-        Profesor guardado = profesorService.registrarProfesor(profesor);
+    public ResponseEntity<ProfesorDTO> registrarProfesor(@RequestBody ProfesorDTO profesorDTO) {
+        ProfesorDTO guardado = profesorService.registrarProfesor(profesorDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(guardado);
     }
 
     @GetMapping
-    public ResponseEntity<List<Profesor>> listarProfesores() {
+    public ResponseEntity<List<ProfesorDTO>> listarProfesores() {
         return ResponseEntity.ok(profesorService.listarProfesores());
     }
 
     @GetMapping("/buscar/id/{idPersona}")
     public ResponseEntity<?> buscarPorId(@PathVariable Long idPersona) {
-        Optional<Profesor> profesor = profesorService.buscarPorId(idPersona);
-        return profesor.isPresent() ?
-                ResponseEntity.ok(profesor.get()) :
-                ResponseEntity.status(HttpStatus.NOT_FOUND).body("Profesor no encontrado");
+        Optional<ProfesorDTO> profesorDTO = profesorService.buscarPorId(idPersona);
+        return profesorDTO.isPresent() ? ResponseEntity.ok(profesorDTO.get())
+                : ResponseEntity.status(HttpStatus.NOT_FOUND).body("Profesor no encontrado");
     }
 
     @GetMapping("/buscar/especialidad/{especialidad}")
     public ResponseEntity<?> buscarPorEspecialidad(@PathVariable String especialidad) {
-        Optional<Profesor> profesor = profesorService.buscarPorEspecialidad(especialidad);
-        return profesor.isPresent() ?
-                ResponseEntity.ok(profesor.get()) :
-                ResponseEntity.status(HttpStatus.NOT_FOUND).body("Profesor no encontrado");
+        List<ProfesorDTO> profesoresDTO = profesorService.buscarPorEspecialidad(especialidad);
+        if (profesoresDTO.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No se encontraron profesores con la especialidad: " + especialidad);
+        }
+
+        return ResponseEntity.ok(profesoresDTO);
     }
 
     @PutMapping("/actualizar/{idPersona}")
     public ResponseEntity<?> actualizarProfesor(
             @PathVariable Long idPersona,
-            @RequestParam String nombre,
-            @RequestParam String apellido,
-            @RequestParam String email,
-            @RequestParam String especialidad,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaContratacion
-    ) {
+            @RequestBody ProfesorDTO profesorDTO) {
         try {
-            Profesor profesor = new Profesor();
-            profesor.setNombre(nombre);
-            profesor.setApellido(apellido);
-            profesor.setEmail(email);
-            profesor.setEspecialidad(especialidad);
-            profesor.setFechaContratacion(fechaContratacion);
-
-            Profesor actualizado = profesorService.actualizarProfesor(idPersona, profesor);
+            ProfesorDTO actualizado = profesorService.actualizarProfesor(idPersona, profesorDTO);
             return ResponseEntity.ok(actualizado);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error al actualizar: " + e.getMessage());
         }
     }
 
