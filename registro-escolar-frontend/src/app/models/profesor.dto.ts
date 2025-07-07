@@ -1,5 +1,5 @@
 export interface ProfesorDTO {
-  idPersona: number;
+  idPersona?: number;
   nombre: string;
   apellido: string;
   email: string;

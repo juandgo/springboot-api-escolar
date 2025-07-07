@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'listar-profesores', pathMatch: 'full' },
   { path: 'registrar-profesor', component: RegistroProfesorComponent },
   { path: 'listar-profesores', component: ListarProfesoresComponent },
+  { path: 'editar-profesor/:id', component: RegistroProfesorComponent }
   // otras rutas...
 ];
 
