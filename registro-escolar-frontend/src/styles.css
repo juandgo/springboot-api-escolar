@@ -12,3 +12,10 @@ h1, h2, h3, h4, h5, h6 { font-weight: 400; margin: 0; }
 h1 { font-size: 2.125rem; }
 h2 { font-size: 1.5rem; }
 h3 { font-size: 1.25rem; }
+
+.full-width {
+  width: 100%;
+}
+.full-height {
+  height: 100%;
+}
