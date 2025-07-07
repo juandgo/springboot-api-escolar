@@ -43,8 +43,8 @@ public class ProfesorServiceImpl implements ProfesorService {
 
     @Override
     public List<ProfesorDTO> buscarPorEspecialidad(String especialidad) {
-        List<Profesor> profesores = profesorRepository.findByEspecialidad(especialidad);
-        return profesores.stream()
+        List<Profesor> profesoresDTO = profesorRepository.findByEspecialidad(especialidad);
+        return profesoresDTO.stream()
                 .map(profesorMapper::toDTO)
                 .collect(Collectors.toList());
     }
