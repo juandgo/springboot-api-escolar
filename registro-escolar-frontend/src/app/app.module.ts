@@ -10,6 +10,7 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegistroProfesorComponent } from './pages/registro-profesor/registro-profesor.component';
 import { RegistroEstudianteComponent } from './pages/registro-estudiante/registro-estudiante.component';
+import { RegistroPersonaComponent } from './pages/registro-persona/registro-persona.component';
 
 import {MatInputModule} from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
@@ -18,6 +19,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,8 +27,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     NavbarComponent,
     SignupComponent,
     LoginComponent,
+    RegistroPersonaComponent,
     RegistroProfesorComponent,
     RegistroEstudianteComponent,
+    RegistroPersonaComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +43,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatCardModule,
     MatToolbarModule, 
     MatIconModule,
+    HttpClientModule, // Import HttpClientModule for HTTP requests
   ],
   providers: [],
   bootstrap: [AppComponent]

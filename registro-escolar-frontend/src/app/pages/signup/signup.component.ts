@@ -9,8 +9,9 @@ import { Component } from '@angular/core';
 })
 export class SignupComponent {
   public user = {
-    name: '',
-    lastname: '',
+    nombre: '',
+    apellido: '',
+    fecha_nac: '',
     email: '',
     telefono: '',
     password: '',
@@ -22,11 +23,12 @@ export class SignupComponent {
   ngOnInit(): void {}
 
   formSubmit() {
-    console.log(this.user);
-    if (this.user.password !== this.user.confirmPassword) {
-      alert('Las contraseñas no coinciden');
-      return;
-    }
+    // console.log(this.user);
+    // if (this.user.password !== this.user.confirmPassword) {
+    //   alert('Las contraseñas no coinciden');
+    //   return;
+    // }
+    
     this.userService.addUser(this.user).subscribe(
       (data)=>{
         console.log(data);
