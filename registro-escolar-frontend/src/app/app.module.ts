@@ -52,8 +52,7 @@ import { ListarEstudiantesComponent } from './pages/listar-estudiantes/listar-es
     MatToolbarModule, 
     MatIconModule,
     MatTableModule,
-    HttpClientModule, // Import HttpClientModule for HTTP requests
-    
+    HttpClientModule, // Import HttpClientModule for HTTP requests    
   ],
   providers: [],
   bootstrap: [AppComponent]
