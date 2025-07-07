@@ -17,7 +17,7 @@ Este proyecto fue desarrollado como parte de una prueba técnica para un cargo d
 * **Gestor de dependencias**: Maven
 
 ### Frontend (Angular)
-* **Angular 17**
+* **Angular 19**
 * **Angular Material**: Para componentes UI y diseño.
 * **TypeScript**
 * **SCSS**
