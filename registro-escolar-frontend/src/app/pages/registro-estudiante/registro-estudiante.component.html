@@ -1,1 +1,67 @@
-<p>registro-estudiante works!</p>
+<div class="bootstrap-wrapper">
+    <div class="container">
+      <div class="row" style="margin-top: 20px">
+        <div class="col-md-6 offset-md-3">
+          <div class="container text-center">
+            <img src="assets/boy.png" width="100" height="100" />
+          </div>
+          <h1 class="text-center">
+            {{ esModoEdicion ? 'Actualizar Estudiante' : 'Registrar Estudiante' }}
+          </h1>
+
+          <div class="container text-center">
+            <form (ngSubmit)="formSubmit()">
+              <!-- Nombre -->
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Nombre</mat-label>
+                <input matInput required name="nombre" [(ngModel)]="estudiante.nombre" placeholder="Digite su nombre" />
+              </mat-form-field>
+          
+              <!-- Apellido -->
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Apellido</mat-label>
+                <input matInput required name="apellido" [(ngModel)]="estudiante.apellido" placeholder="Digite su apellido" />
+              </mat-form-field>
+          
+              <!-- Email -->
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" required name="email" [(ngModel)]="estudiante.email" placeholder="Digite su email" />
+              </mat-form-field>
+          
+              <!-- Teléfono -->
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Teléfono</mat-label>
+                <input matInput required name="telefono" [(ngModel)]="estudiante.telefono" type="tel" placeholder="Digite su teléfono" />
+              </mat-form-field>
+          
+              <!-- Fecha de nacimiento -->
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Fecha de nacimiento</mat-label>
+                <input matInput required name="fechaNacimiento" [(ngModel)]="estudiante.fechaNacimiento" type="date" />
+              </mat-form-field>
+          
+              <!-- Número de matrícula -->
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Número de matrícula</mat-label>
+                <input matInput required name="numeroMatricula" [(ngModel)]="estudiante.numeroMatricula" placeholder="Ingrese número de matrícula" />
+              </mat-form-field>
+          
+              <!-- Grado -->
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Grado</mat-label>
+                <input matInput required name="grado" [(ngModel)]="estudiante.grado" placeholder="Ingrese grado del estudiante" />
+              </mat-form-field>
+          
+              <!-- Botones -->
+              <button mat-raised-button color="primary" type="submit">
+                {{ esModoEdicion ? 'Actualizar' : 'Registrar' }}
+              </button>
+              <button mat-raised-button color="accent" type="reset" style="margin-left: 10px">Limpiar</button>
+            </form>
+          </div>          
+        </div>
+      </div>
+    </div>
+  </div>
+  

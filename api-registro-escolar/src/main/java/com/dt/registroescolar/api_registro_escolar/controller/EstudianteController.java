@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/estudiantes")
+@CrossOrigin("*")
 public class EstudianteController {
 
     @Autowired
@@ -36,12 +37,12 @@ public class EstudianteController {
                 : ResponseEntity.status(HttpStatus.NOT_FOUND).body("Estudiante no encontrado");
     }
 
-//    @GetMapping("/buscar/matricula/{numeroMatricula}")
-//    public ResponseEntity<?> buscarPorNumeroMatricula(@PathVariable String numeroMatricula) {
-//        Optional<EstudianteDTO> estudiante = estudianteService.buscarPorNumeroMatricula(numeroMatricula);
-//        return estudiante.map(ResponseEntity::ok)
-//                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Estudiante no encontrado"));
-//    }
+    @GetMapping("/buscar/matricula/{numeroMatricula}")
+    public ResponseEntity<?> buscarPorNumeroMatricula(@PathVariable String numeroMatricula) {
+        Optional<EstudianteDTO> estudianteDTO = estudianteService.buscarPorNumeroMatricula(numeroMatricula);
+        return estudianteDTO.isPresent() ? ResponseEntity.ok(estudianteDTO.get())
+                : ResponseEntity.status(HttpStatus.NOT_FOUND).body("Estudiante no encontrado");
+    }
 
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<?> actualizarEstudiante(

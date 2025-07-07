@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>Listado de Profesores</h2>
+    <mat-table [dataSource]="profesores" class="mat-elevation-z8">
+      <!-- Columnas existentes -->
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+        <mat-cell *matCellDef="let prof"> {{ prof.nombre }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="apellido">
+        <mat-header-cell *matHeaderCellDef> Apellido </mat-header-cell>
+        <mat-cell *matCellDef="let prof"> {{ prof.apellido }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+        <mat-cell *matCellDef="let prof"> {{ prof.email }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="telefono">
+        <mat-header-cell *matHeaderCellDef> Teléfono </mat-header-cell>
+        <mat-cell *matCellDef="let prof"> {{ prof.telefono }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="especialidad">
+        <mat-header-cell *matHeaderCellDef> Especialidad </mat-header-cell>
+        <mat-cell *matCellDef="let prof"> {{ prof.especialidad }} </mat-cell>
+      </ng-container>
+
+      <!-- NUEVA COLUMNA: Acciones -->
+      <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+        <mat-cell *matCellDef="let prof">
+          <button mat-button color="primary" (click)="editarProfesor(prof)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <!-- <button
+            mat-button
+            color="warn"
+            (click)="eliminarProfesor(prof.idPersona)"
+          >
+            Eliminar
+          </button> -->
+          <button mat-icon-button color="warn" (click)="eliminarProfesor(prof.idPersona)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Encabezado y filas -->
+      <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: columnas"></mat-row>
+    </mat-table>
+  </body>
+</html>

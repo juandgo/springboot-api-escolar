@@ -1,1 +1,165 @@
-<p>registro-profesor works!</p>
+<div class="bootstrap-wrapper">
+  <div class="container">
+    <div class="row" style="margin-top: 20px">
+      <div class="col-md-6 offset-md-3">
+        <div class="container text-center">
+          <img src="assets/boy.png" width="100" height="100" />
+        </div>
+        <!-- <h1 class="text-center">Regístrate aquí</h1> -->
+        <h1 class="text-center">{{ modoEdicion ? 'Editar Profesor' : 'Regístrate aquí' }}</h1>
+
+        <div class="container text-center">
+          <h1>Registrar Profesor</h1>
+          <form (ngSubmit)="formSubmit()">
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Nombre</mat-label>
+              <input
+                matInput
+                required
+                name="nombre"
+                [(ngModel)]="profesor.nombre"
+                placeholder="Digite su nombre"
+                type="text"
+              />
+            </mat-form-field>
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Apellido</mat-label>
+              <input
+                matInput
+                required
+                name="apellido"
+                [(ngModel)]="profesor.apellido"
+                placeholder="Digite su apellido"
+                type="text"
+              />
+            </mat-form-field>
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Email</mat-label>
+              <input
+                matInput
+                type="email"
+                required
+                name="email"
+                [(ngModel)]="profesor.email"
+                placeholder="Digite su email"
+              />
+            </mat-form-field>
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Teléfono</mat-label>
+              <input
+                matInput
+                required
+                name="telefono"
+                [(ngModel)]="profesor.telefono"
+                type="tel"
+                placeholder="Digite su teléfono"
+              />
+            </mat-form-field>
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Fecha de nacimiento</mat-label>
+              <input
+                matInput
+                required
+                name="fechaNacimiento"
+                [(ngModel)]="profesor.fechaNacimiento"
+                type="date"
+              />
+            </mat-form-field>
+
+            
+            <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Especialidad</mat-label>
+                <input
+                matInput
+                required
+                name="especialidad"
+                [(ngModel)]="profesor.especialidad"
+                />
+            </mat-form-field>
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Fecha de contratación</mat-label>
+              <input
+                matInput
+                required
+                name="fechaContratacion"
+                [(ngModel)]="profesor.fechaContratacion"
+                type="date"
+              />
+            </mat-form-field>
+
+            <!-- <button mat-raised-button color="primary">Registrar</button> -->
+            <button mat-raised-button color="primary">
+                {{ modoEdicion ? 'Actualizar' : 'Registrar' }}
+              </button>
+              <button
+              mat-raised-button
+              color="accent"
+              type="reset"
+              style="margin-left: 10px"
+            >
+              Limpiar
+            </button>
+          </form>
+        </div>
+
+        <!-- <br /><br /><br />
+        <h2>Listado de Profesores</h2>
+        <mat-table [dataSource]="profesores" class="mat-elevation-z8">
+          <ng-container matColumnDef="nombre">
+            <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+            <mat-cell *matCellDef="let prof"> {{ prof.nombre }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="apellido">
+            <mat-header-cell *matHeaderCellDef> Apellido </mat-header-cell>
+            <mat-cell *matCellDef="let prof"> {{ prof.apellido }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+            <mat-cell *matCellDef="let prof"> {{ prof.email }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="telefono">
+            <mat-header-cell *matHeaderCellDef> Teléfono </mat-header-cell>
+            <mat-cell *matCellDef="let prof"> {{ prof.telefono }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="especialidad">
+            <mat-header-cell *matHeaderCellDef> Especialidad </mat-header-cell>
+            <mat-cell *matCellDef="let prof">
+              {{ prof.especialidad }}
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row
+            *matHeaderRowDef="[
+              'nombre',
+              'apellido',
+              'email',
+              'telefono',
+              'especialidad'
+            ]"
+          ></mat-header-row>
+          <mat-row
+            *matRowDef="
+              let row;
+              columns: [
+                'nombre',
+                'apellido',
+                'email',
+                'telefono',
+                'especialidad'
+              ]
+            "
+          ></mat-row>
+        </mat-table> -->
+      </div>
+    </div>
+  </div>
+</div>
