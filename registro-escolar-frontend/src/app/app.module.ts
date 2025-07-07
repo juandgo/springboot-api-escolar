@@ -22,6 +22,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { ListarProfesoresComponent } from './pages/listar-profesores/listar-profesores.component';
+import { RouterModule } from '@angular/router';
+import { ListarEstudiantesComponent } from './pages/listar-estudiantes/listar-estudiantes.component';
+
 
 @NgModule({
   declarations: [
@@ -34,8 +37,10 @@ import { ListarProfesoresComponent } from './pages/listar-profesores/listar-prof
     RegistroEstudianteComponent,
     RegistroPersonaComponent,
     ListarProfesoresComponent,
+    ListarEstudiantesComponent,
   ],
   imports: [
+    RouterModule,
     BrowserModule,
     AppRoutingModule,
     MatButtonModule,
@@ -48,6 +53,7 @@ import { ListarProfesoresComponent } from './pages/listar-profesores/listar-prof
     MatIconModule,
     MatTableModule,
     HttpClientModule, // Import HttpClientModule for HTTP requests
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
