@@ -5,7 +5,8 @@
         <div class="container text-center">
           <img src="assets/boy.png" width="100" height="100" />
         </div>
-        <h1 class="text-center">Regístrate aquí</h1>
+        <!-- <h1 class="text-center">Regístrate aquí</h1> -->
+        <h1 class="text-center">{{ modoEdicion ? 'Editar Profesor' : 'Regístrate aquí' }}</h1>
 
         <div class="container text-center">
           <h1>Registrar Profesor</h1>
@@ -69,18 +70,33 @@
               />
             </mat-form-field>
 
+            
             <mat-form-field class="full-width" appearance="outline">
-              <mat-label>Especialidad</mat-label>
-              <input
+                <mat-label>Especialidad</mat-label>
+                <input
                 matInput
                 required
                 name="especialidad"
                 [(ngModel)]="profesor.especialidad"
+                />
+            </mat-form-field>
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Fecha de contratación</mat-label>
+              <input
+                matInput
+                required
+                name="fechaContratacion"
+                [(ngModel)]="profesor.fechaContratacion"
+                type="date"
               />
             </mat-form-field>
 
-            <button mat-raised-button color="primary">Registrar</button>
-            <button
+            <!-- <button mat-raised-button color="primary">Registrar</button> -->
+            <button mat-raised-button color="primary">
+                {{ modoEdicion ? 'Actualizar' : 'Registrar' }}
+              </button>
+              <button
               mat-raised-button
               color="accent"
               type="reset"
@@ -91,7 +107,7 @@
           </form>
         </div>
 
-        <br /><br /><br />
+        <!-- <br /><br /><br />
         <h2>Listado de Profesores</h2>
         <mat-table [dataSource]="profesores" class="mat-elevation-z8">
           <ng-container matColumnDef="nombre">
@@ -142,7 +158,7 @@
               ]
             "
           ></mat-row>
-        </mat-table>
+        </mat-table> -->
       </div>
     </div>
   </div>

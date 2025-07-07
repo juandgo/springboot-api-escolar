@@ -1,26 +1,26 @@
-// src/app/pages/registro-profesor/registro-profesor.component.ts
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProfesorDTO } from '../../models/profesor.dto';
 import { ProfesorService } from '../../services/profesor.service';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-registro-profesor',
   standalone: false,
-  templateUrl: './registro-profesor.component.html',
+  templateUrl: './registro-profesor.component.html'
 })
 export class RegistroProfesorComponent implements OnInit {
   profesor: ProfesorDTO = {
-    idPersona: 0, // puedes usar undefined si prefieres
+    idPersona: 0, // Asegúrate que existe en tu DTO
     nombre: '',
     apellido: '',
     email: '',
     telefono: '',
     fechaNacimiento: '',
     especialidad: '',
+    fechaContratacion: '',
   };
 
-  profesores: ProfesorDTO[] = [];
+  modoEdicion: boolean = false;
 
   constructor(
     private profesorService: ProfesorService,
@@ -29,29 +29,43 @@ export class RegistroProfesorComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.profesorService.listarProfesores().subscribe({
-      next: (data) => (this.profesores = data),
-      error: (err) => console.error('Error al obtener profesores:', err),
-    });
+    const id = this.route.snapshot.paramMap.get('id');
+
+    if (id) {
+      this.modoEdicion = true;
+      this.profesorService.obtenerProfesorPorId(+id).subscribe({
+        next: (data) => this.profesor = data,
+        error: (err) => console.error('Error al cargar profesor', err)
+      });
+    }
   }
 
   formSubmit(): void {
-    this.profesorService.registrarProfesor(this.profesor).subscribe({
-      next: () => {
-        alert('Profesor registrado con éxito');
-        this.profesor = {
-          nombre: '',
-          apellido: '',
-          email: '',
-          telefono: '',
-          fechaNacimiento: '',
-          especialidad: '',
-        };
-      },
-      error: (err) => {
-        console.error(err);
-        alert('Error al registrar profesor');
-      },
-    });
+    const data = { ...this.profesor };
+    if (!this.modoEdicion) {
+      delete data.idPersona; // evitar mandar id en el registro
+      this.profesorService.registrarProfesor(data).subscribe({
+        next: () => {
+          alert('Profesor registrado con éxito');
+          this.router.navigate(['/listar-profesores']);
+        },
+        error: (err) => {
+          console.error('Error al registrar profesor', err);
+          alert('Error al registrar profesor');
+        }
+      });
+    } else {
+      this.profesorService.actualizarProfesor(data).subscribe({
+        next: () => {
+          alert('Profesor actualizado con éxito');
+          this.router.navigate(['/listar-profesores']);
+        },
+        error: (err) => {
+          console.error('Error al actualizar profesor', err);
+          alert('Error al actualizar profesor');
+        }
+      });
+    }
   }
+  
 }
