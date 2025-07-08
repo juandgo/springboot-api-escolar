@@ -23,7 +23,6 @@ public class ProfesorMapper {
     public ProfesorDTO toDTO(Profesor profesor) {
 //        return modelMapper.map(profesor, ProfesorDTO.class);
         ProfesorDTO dto = modelMapper.map(profesor, ProfesorDTO.class);
-        System.out.println("ID mapeado: " + dto.getIdPersona()); // debug
         return dto;
     }
 

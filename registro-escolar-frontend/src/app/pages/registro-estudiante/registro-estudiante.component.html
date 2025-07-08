@@ -6,7 +6,7 @@
             <img src="assets/boy.png" width="100" height="100" />
           </div>
           <h1 class="text-center">
-            {{ esModoEdicion ? 'Actualizar Estudiante' : 'Registrar Estudiante' }}
+            {{ modoEdicion ? 'Actualizar Estudiante' : 'Registrar Estudiante' }}
           </h1>
 
           <div class="container text-center">
@@ -55,7 +55,7 @@
           
               <!-- Botones -->
               <button mat-raised-button color="primary" type="submit">
-                {{ esModoEdicion ? 'Actualizar' : 'Registrar' }}
+                {{ modoEdicion ? 'Actualizar' : 'Registrar' }}
               </button>
               <button mat-raised-button color="accent" type="reset" style="margin-left: 10px">Limpiar</button>
             </form>

@@ -28,12 +28,8 @@ export class ProfesorService {
     return this.http.get<ProfesorDTO[]>(`${this.baseUrl}/buscar/especialidad/${especialidad}`);
   }
 
-  // actualizarProfesor(id: number, profesor: ProfesorDTO): Observable<ProfesorDTO> {
-  //   return this.http.put<ProfesorDTO>(`${this.baseUrl}/actualizar/${id}`, profesor);
-  // }
-
   actualizarProfesor(profesor: ProfesorDTO): Observable<void> {
-    return this.http.put<void>(`${this.baseUrl}/actualizar/${profesor.idPersona}`, profesor);
+    return this.http.put<void>(`${this.baseUrl}/actualizar/${profesor.id}`, profesor);
   }
 
   eliminarProfesor(id: number): Observable<void> {
