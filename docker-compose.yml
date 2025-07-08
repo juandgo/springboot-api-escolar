@@ -30,7 +30,7 @@ services:
     container_name: mysql_escolar
     environment:
       MYSQL_DATABASE: api_escolar
-      MYSQL_USER: root
+      # MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: admin123
     ports:
       - "3306:3306"

@@ -2,6 +2,7 @@ package com.dt.registroescolar.api_registro_escolar.controller;
 
 import com.dt.registroescolar.api_registro_escolar.dto.EstudianteDTO;
 import com.dt.registroescolar.api_registro_escolar.service.EstudianteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,25 +48,10 @@ public class EstudianteController {
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<?> actualizarEstudiante(
             @PathVariable Long id,
-            @RequestParam("nombre") String nombre,
-            @RequestParam("apellido") String apellido,
-            @RequestParam("fechaNacimiento") String fechaNacimiento,
-            @RequestParam("email") String email,
-            @RequestParam("telefono") String telefono,
-            @RequestParam("numeroMatricula") String numeroMatricula,
-            @RequestParam("grado") String grado) {
-
-        EstudianteDTO estudianteActualizado = new EstudianteDTO();
-        estudianteActualizado.setNombre(nombre);
-        estudianteActualizado.setApellido(apellido);
-        estudianteActualizado.setFechaNacimiento(LocalDate.parse(fechaNacimiento));
-        estudianteActualizado.setEmail(email);
-        estudianteActualizado.setTelefono(telefono);
-        estudianteActualizado.setNumeroMatricula(numeroMatricula);
-        estudianteActualizado.setGrado(grado);
+            @Valid @RequestBody EstudianteDTO estudianteDTO) {
 
         try {
-            EstudianteDTO actualizado = estudianteService.actualizarEstudiante(id, estudianteActualizado);
+            EstudianteDTO actualizado = estudianteService.actualizarEstudiante(id, estudianteDTO);
             return ResponseEntity.ok(actualizado);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error al actualizar: " + e.getMessage());

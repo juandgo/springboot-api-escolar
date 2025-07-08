@@ -6,9 +6,12 @@
     <title>Document</title>
   </head>
   <body>
+
     <h2>Listado de Estudiantes</h2>
 
+    <!-- <pre>{{ estudiantes | json }}</pre> -->
     <mat-table [dataSource]="estudiantes" class="mat-elevation-z8">
+
       <!-- Columna: Nombre -->
       <ng-container matColumnDef="nombre">
         <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
@@ -49,7 +52,7 @@
           <button
             mat-icon-button
             color="warn"
-            (click)="eliminarEstudiante(est.idPersona)"
+            (click)="eliminarEstudiante(est.id)"
           >
             <mat-icon>delete</mat-icon>
           </button>

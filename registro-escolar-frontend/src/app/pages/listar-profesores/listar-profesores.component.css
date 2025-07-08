@@ -1,0 +1,19 @@
+.tabla-responsive {
+    overflow-x: auto;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  mat-table {
+    width: 100%;
+    min-width: 600px; 
+  }
+  
+  @media (max-width: 768px) {
+    mat-header-cell,
+    mat-cell {
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+  }
+  

@@ -27,10 +27,17 @@ export class ListarEstudiantesComponent implements OnInit {
   }
 
   editarEstudiante(estudiante: EstudianteDTO): void {
-    this.router.navigate(['/editar-estudiante', estudiante.idPersona]);
+      this.router.navigate(['/editar-estudiante', estudiante.id]);
   }
+  
 
-  eliminarEstudiante(id: number): void {
+  eliminarEstudiante(id: number | undefined): void {
+    console.log('ID recibido para eliminar:', id); // <-- Esto
+    if (!id) {
+      alert('ID de estudiante no válido');
+      return;
+    }
+  
     if (confirm('¿Seguro que deseas eliminar este estudiante?')) {
       this.estudianteService.eliminarEstudiante(id).subscribe({
         next: () => {

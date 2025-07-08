@@ -10,7 +10,7 @@ import { ProfesorService } from '../../services/profesor.service';
 })
 export class RegistroProfesorComponent implements OnInit {
   profesor: ProfesorDTO = {
-    idPersona: 0, // Asegúrate que existe en tu DTO
+    id: 0, // Asegúrate que existe en tu DTO
     nombre: '',
     apellido: '',
     email: '',
@@ -43,7 +43,7 @@ export class RegistroProfesorComponent implements OnInit {
   formSubmit(): void {
     const data = { ...this.profesor };
     if (!this.modoEdicion) {
-      delete data.idPersona; // evitar mandar id en el registro
+      delete data.id; // evitar mandar id en el registro
       this.profesorService.registrarProfesor(data).subscribe({
         next: () => {
           alert('Profesor registrado con éxito');

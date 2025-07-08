@@ -20,7 +20,8 @@ export class ListarProfesoresComponent implements OnInit {
   }
 
   obtenerProfesores(): void {
-    this.profesorService.listarProfesores().subscribe({
+    this.profesorService.listarProfesores().subscribe(
+      {
       next: (data) => {
         this.profesores = data;
         console.log('Profesores recibidos:', this.profesores);
@@ -30,56 +31,35 @@ export class ListarProfesoresComponent implements OnInit {
   }
 
   editarProfesor(profesor: ProfesorDTO): void {
-    // Redireccionar a un componente de edición con el id
-    this.router.navigate(['/editar-profesor', profesor.idPersona]);
+    const id = profesor.id;
+  
+    if (!id) {
+      console.error('ID del profesor no definido:', profesor);
+      alert('No se puede editar el profesor: ID no definido');
+      return;
+    }
+  
+    this.router.navigate(['/editar-profesor', id]);
   }
-
-  // eliminarProfesor(id: number | undefined): void {
-  //   if (!id) return;
-
-  //   if (confirm('¿Estás seguro de eliminar este profesor?')) {
-  //     this.profesorService.eliminarProfesor(id).subscribe({
-  //       next: () => {
-  //         alert('Profesor eliminado');
-  //         this.obtenerProfesores(); // Recarga la tabla
-  //       },
-  //       error: (err) => {
-  //         console.error('Error al eliminar:', err);
-  //         alert('No se pudo eliminar el profesor');
-  //       }
-  //     });
-  //   }
-  // }
-  // eliminarProfesor(id: number): void {
-  //   if (confirm('¿Seguro que deseas eliminar este profesor?')) {
-  //     this.profesorService.eliminarProfesor(id).subscribe({
-  //       next: () => {
-  //         alert('Profesor eliminado');
-  //         this.obtenerProfesores(); // refresca la tabla
-  //       },
-  //       error: err => {
-  //         alert('Error al eliminar');
-  //         console.error(err);
-  //       }
-  //     });
-  //   }
-  // }
 
   eliminarProfesor(profesorId: number): void {
     if (!profesorId) {
       console.error('ID del profesor no válido:', profesorId);
       return;
     }
-  
-    this.profesorService.eliminarProfesor(profesorId).subscribe({
-      next: () => {
-        console.log('Profesor eliminado');
-        this.obtenerProfesores(); // refrescar lista
-      },
-      error: err => {
-        console.error('Error al eliminar profesor:', err);
-      }
-    });
+
+    if (confirm('¿Seguro que deseas eliminar este profesor?')) {
+      this.profesorService.eliminarProfesor(profesorId).subscribe({
+        next: () => {
+          alert('Profesor eliminado con éxito');
+          this.obtenerProfesores();
+        },
+        error: (err) => {
+          console.error('Error al eliminar profesor:', err);
+          alert('No se pudo eliminar el profesor');
+        }
+      });
+    }
   }
 }
 
