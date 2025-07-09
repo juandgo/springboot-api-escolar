@@ -60,19 +60,42 @@ export class ListarProfesoresComponent implements OnInit {
       return;
     }
 
-    if (confirm('¿Seguro que deseas eliminar este profesor?')) {
-      this.profesorService.eliminarProfesor(profesorId).subscribe({
-        next: () => {
-          // alert('Profesor eliminado con éxito');
-          // Swal.fire(" Usuario guardado ", "Usuario registrado con exito en el sistema", "success" );
-          Swal.fire(" Profesor eliminado", "Profesor eliminado", "info" );
-          this.obtenerProfesores();
-        },
-        error: (err) => {
-          console.error('Error al eliminar profesor:', err);
-          alert('No se pudo eliminar el profesor');
-        },
-      });
-    }
+    // if (confirm('¿Seguro que deseas eliminar este profesor?')) {
+    //   this.profesorService.eliminarProfesor(profesorId).subscribe({
+    //     next: () => {
+    //       // alert('Profesor eliminado con éxito');
+    //       Swal.fire(" Profesor eliminado", "Profesor eliminado", "info" );
+    //       this.obtenerProfesores();
+    //     },
+    //     error: (err) => {
+    //       console.error('Error al eliminar profesor:', err);
+    //       alert('No se pudo eliminar el profesor');
+    //     },
+    //   });
+    // }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Seguro que deseas eliminar este profesor?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.profesorService.eliminarProfesor(profesorId).subscribe({
+          next: () => {
+            Swal.fire('Profesor eliminado', 'Profesor eliminado con éxito', 'info');
+            this.obtenerProfesores();
+          },
+          error: (err) => {
+            console.error('Error al eliminar profesor:', err);
+            Swal.fire('Error', 'No se pudo eliminar el profesor', 'error');
+          },
+        });
+      }
+    });
+    
   }
 }
