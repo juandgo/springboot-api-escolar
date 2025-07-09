@@ -1,67 +1,114 @@
 <div class="bootstrap-wrapper">
-    <div class="container">
-      <div class="row" style="margin-top: 20px">
-        <div class="col-md-6 offset-md-3">
-          <div class="container text-center">
-            <img src="assets/boy.png" width="100" height="100" />
-          </div>
-          <h1 class="text-center">
-            {{ modoEdicion ? 'Actualizar Estudiante' : 'Registrar Estudiante' }}
-          </h1>
+  <div class="container">
+    <div class="row" style="margin-top: 20px">
+      <div class="col-md-6 offset-md-3">
+        <div class="container text-center">
+          <img src="assets/boy.png" width="100" height="100" />
+        </div>
+        <h1 class="text-center">
+          {{ modoEdicion ? 'Actualizar Estudiante' : 'Registrar Estudiante' }}
+        </h1>
 
-          <div class="container text-center">
-            <form (ngSubmit)="formSubmit()">
-              <!-- Nombre -->
-              <mat-form-field class="full-width" appearance="outline">
-                <mat-label>Nombre</mat-label>
-                <input matInput required name="nombre" [(ngModel)]="estudiante.nombre" placeholder="Digite su nombre" />
-              </mat-form-field>
-          
-              <!-- Apellido -->
-              <mat-form-field class="full-width" appearance="outline">
-                <mat-label>Apellido</mat-label>
-                <input matInput required name="apellido" [(ngModel)]="estudiante.apellido" placeholder="Digite su apellido" />
-              </mat-form-field>
-          
-              <!-- Email -->
-              <mat-form-field class="full-width" appearance="outline">
-                <mat-label>Email</mat-label>
-                <input matInput type="email" required name="email" [(ngModel)]="estudiante.email" placeholder="Digite su email" />
-              </mat-form-field>
-          
-              <!-- Teléfono -->
-              <mat-form-field class="full-width" appearance="outline">
-                <mat-label>Teléfono</mat-label>
-                <input matInput required name="telefono" [(ngModel)]="estudiante.telefono" type="tel" placeholder="Digite su teléfono" />
-              </mat-form-field>
-          
-              <!-- Fecha de nacimiento -->
-              <mat-form-field class="full-width" appearance="outline">
-                <mat-label>Fecha de nacimiento</mat-label>
-                <input matInput required name="fechaNacimiento" [(ngModel)]="estudiante.fechaNacimiento" type="date" />
-              </mat-form-field>
-          
-              <!-- Número de matrícula -->
-              <mat-form-field class="full-width" appearance="outline">
-                <mat-label>Número de matrícula</mat-label>
-                <input matInput required name="numeroMatricula" [(ngModel)]="estudiante.numeroMatricula" placeholder="Ingrese número de matrícula" />
-              </mat-form-field>
-          
-              <!-- Grado -->
-              <mat-form-field class="full-width" appearance="outline">
-                <mat-label>Grado</mat-label>
-                <input matInput required name="grado" [(ngModel)]="estudiante.grado" placeholder="Ingrese grado del estudiante" />
-              </mat-form-field>
-          
-              <!-- Botones -->
-              <button mat-raised-button color="primary" type="submit">
+        <div class="container text-center">
+          <form [formGroup]="estudianteForm" (ngSubmit)="formSubmit()">
+
+            <!-- Nombre -->
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Nombre</mat-label>
+              <input matInput formControlName="nombre" placeholder="Digite su nombre" />
+              <mat-error *ngIf="estudianteForm.get('nombre')?.hasError('required') && estudianteForm.get('nombre')?.touched">
+                El nombre es obligatorio
+              </mat-error>
+              <mat-error *ngIf="estudianteForm.get('nombre')?.hasError('maxlength')">
+                Máximo 50 caracteres
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Apellido -->
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Apellido</mat-label>
+              <input matInput formControlName="apellido" placeholder="Digite su apellido" />
+              <mat-error *ngIf="estudianteForm.get('apellido')?.hasError('required') && estudianteForm.get('apellido')?.touched">
+                El apellido es obligatorio
+              </mat-error>
+              <mat-error *ngIf="estudianteForm.get('apellido')?.hasError('maxlength')">
+                Máximo 50 caracteres
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Email -->
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" placeholder="Digite su email" type="email" />
+              <mat-error *ngIf="estudianteForm.get('email')?.hasError('required') && estudianteForm.get('email')?.touched">
+                El email es obligatorio
+              </mat-error>
+              <mat-error *ngIf="estudianteForm.get('email')?.hasError('email')">
+                Formato de email inválido
+              </mat-error>
+              <mat-error *ngIf="estudianteForm.get('email')?.hasError('maxlength')">
+                Máximo 100 caracteres
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Teléfono -->
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Teléfono</mat-label>
+              <input matInput formControlName="telefono" placeholder="Digite su teléfono" />
+              <mat-error *ngIf="estudianteForm.get('telefono')?.hasError('required') && estudianteForm.get('telefono')?.touched">
+                El teléfono es obligatorio
+              </mat-error>
+              <mat-error *ngIf="estudianteForm.get('telefono')?.hasError('pattern')">
+                Formato inválido (solo números y símbolos: + - ( ) espacio)
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Fecha de nacimiento -->
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Fecha de nacimiento</mat-label>
+              <input matInput formControlName="fechaNacimiento" type="date" />
+              <mat-error *ngIf="estudianteForm.get('fechaNacimiento')?.hasError('required') && estudianteForm.get('fechaNacimiento')?.touched">
+                La fecha de nacimiento es obligatoria
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Número de matrícula -->
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Número de matrícula</mat-label>
+              <input matInput formControlName="numeroMatricula" placeholder="Ingrese número de matrícula" />
+              <mat-error *ngIf="estudianteForm.get('numeroMatricula')?.hasError('required') && estudianteForm.get('numeroMatricula')?.touched">
+                La matrícula es obligatoria
+              </mat-error>
+              <mat-error *ngIf="estudianteForm.get('numeroMatricula')?.hasError('maxlength')">
+                Máximo 20 caracteres
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Grado -->
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Grado</mat-label>
+              <input matInput formControlName="grado" placeholder="Ingrese grado del estudiante" />
+              <mat-error *ngIf="estudianteForm.get('grado')?.hasError('required') && estudianteForm.get('grado')?.touched">
+                El grado es obligatorio
+              </mat-error>
+              <mat-error *ngIf="estudianteForm.get('grado')?.hasError('maxlength')">
+                Máximo 50 caracteres
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Botones -->
+            <div class="text-center">
+              <button mat-raised-button color="primary" [disabled]="estudianteForm.invalid">
                 {{ modoEdicion ? 'Actualizar' : 'Registrar' }}
               </button>
-              <button mat-raised-button color="accent" type="reset" style="margin-left: 10px">Limpiar</button>
-            </form>
-          </div>          
+              <button mat-raised-button color="accent" type="reset" style="margin-left: 10px">
+                Limpiar
+              </button>
+            </div>
+
+          </form>
         </div>
       </div>
     </div>
   </div>
-  
+</div>
