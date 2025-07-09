@@ -15,7 +15,7 @@ import { ListarProfesoresComponent } from './pages/listar-profesores/listar-prof
 import { ListarEstudiantesComponent } from './pages/listar-estudiantes/listar-estudiantes.component';
 
 import {MatInputModule} from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -53,6 +53,7 @@ import { RouterModule } from '@angular/router';
     MatIconModule,
     MatTableModule,
     MatSnackBarModule,
+    ReactiveFormsModule,
     HttpClientModule, // Import HttpClientModule for HTTP requests    
   ],
   providers: [],
