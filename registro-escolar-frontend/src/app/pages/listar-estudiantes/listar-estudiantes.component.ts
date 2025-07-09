@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EstudianteDTO } from '../../models/estudiante.dto';
 import { EstudianteService } from '../../services/estudiante.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-listar-estudiantes',
@@ -38,17 +39,29 @@ export class ListarEstudiantesComponent implements OnInit {
       return;
     }
   
-    if (confirm('¿Seguro que deseas eliminar este estudiante?')) {
-      this.estudianteService.eliminarEstudiante(id).subscribe({
-        next: () => {
-          alert('Estudiante eliminado con éxito');
-          this.obtenerEstudiantes();
-        },
-        error: (err) => {
-          console.error('Error al eliminar estudiante:', err);
-          alert('No se pudo eliminar el estudiante');
-        }
-      });
-    }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Seguro que deseas eliminar este estudiante?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.estudianteService.eliminarEstudiante(id).subscribe({
+          next: () => {
+            Swal.fire('Estudiante eliminado', 'Estudiante eliminado con éxito', 'info');
+            this.obtenerEstudiantes();
+          },
+          error: (err) => {
+            console.error('Error al eliminar estudiante:', err);
+            Swal.fire('Error', 'No se pudo eliminar el estudiante', 'error');
+          }
+        });
+      }
+    });
+    
   }
 }
