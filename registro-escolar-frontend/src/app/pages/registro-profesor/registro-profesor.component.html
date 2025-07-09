@@ -6,10 +6,9 @@
           <img src="assets/boy.png" width="100" height="100" />
         </div>
         <!-- <h1 class="text-center">Regístrate aquí</h1> -->
-        <h1 class="text-center">{{ modoEdicion ? 'Editar Profesor' : 'Regístrate aquí' }}</h1>
+        <h1 class="text-center">{{ modoEdicion ? 'Editar Profesor' : 'Regístrar Profesor' }}</h1>
 
         <div class="container text-center">
-          <h1>Registrar Profesor</h1>
           <form (ngSubmit)="formSubmit()">
             <mat-form-field class="full-width" appearance="outline">
               <mat-label>Nombre</mat-label>
@@ -20,6 +19,7 @@
                 [(ngModel)]="profesor.nombre"
                 placeholder="Digite su nombre"
                 type="text"
+                required
               />
             </mat-form-field>
 

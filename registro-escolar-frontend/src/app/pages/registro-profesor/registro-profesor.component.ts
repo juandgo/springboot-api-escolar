@@ -1,7 +1,9 @@
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProfesorDTO } from '../../models/profesor.dto';
 import { ProfesorService } from '../../services/profesor.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-registro-profesor',
@@ -25,7 +27,8 @@ export class RegistroProfesorComponent implements OnInit {
   constructor(
     private profesorService: ProfesorService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private snack: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -46,18 +49,26 @@ export class RegistroProfesorComponent implements OnInit {
       delete data.id; // evitar mandar id en el registro
       this.profesorService.registrarProfesor(data).subscribe({
         next: () => {
-          alert('Profesor registrado con éxito');
+          // alert('Profesor registrado con éxito');
+          Swal.fire(" Profesor registrado ", "Profesor registrado con éxito", "success" );
           this.router.navigate(['/listar-profesores']);
         },
         error: (err) => {
           console.error('Error al registrar profesor', err);
           alert('Error al registrar profesor');
+          this.snack.open('Error al registrar profesor', 'Cerrar', {
+            duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          });
         }
       });
     } else {
       this.profesorService.actualizarProfesor(data).subscribe({
         next: () => {
-          alert('Profesor actualizado con éxito');
+          // alert('Profesor actualizado con éxito');
+          Swal.fire(" Profesor actualizado ", "Profesor actualizado con éxito", "success" );
+
           this.router.navigate(['/listar-profesores']);
         },
         error: (err) => {
