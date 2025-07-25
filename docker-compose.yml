@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   # postgres:
@@ -23,35 +23,43 @@ services:
   #   depends_on:
   #     - postgres
 
-
   # Servicio de base de datos MySQL
+
   mysql:
-    image: mysql:5
+    image: mysql:5.7
     container_name: mysql_escolar
     environment:
       MYSQL_DATABASE: api_escolar
-      # MYSQL_USER: root
+      # MYSQL_USER: root # comentar o descomentar en caso de que no funcione mysql
+      MYSQL_PASSWORD: admin123
       MYSQL_ROOT_PASSWORD: admin123
     ports:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - escolar_net
 
   # Servicio phpMyAdmin
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
     container_name: phpmyadmin_escolar
     environment:
       PMA_HOST: mysql
+      PMA_PORT: 3306
       MYSQL_ROOT_PASSWORD: admin123
     ports:
       - "8081:80"
     depends_on:
       - mysql
+    networks:
+      - escolar_net
 
 # Volúmenes persistentes
 volumes:
   mysql_data:
 
-
-
+# Red compartida entre servicios
+networks:
+  escolar_net:
+    driver: bridge
