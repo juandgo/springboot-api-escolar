@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ApiRegistroEscolarApplication<api-registro-escolar>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.dt.registroescolar.api_registro_escolar.ApiRegistroEscolarApplication",
+            "projectName": "api-registro-escolar",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
